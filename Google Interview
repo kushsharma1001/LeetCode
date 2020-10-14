@@ -75,3 +75,57 @@ class GFG
 		System.out.println(findLongestString(listOfWords, str)); 
 	} 
 } 
+//Slight better:
+
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        printLongestWord("abpcplea",new HashSet(Arrays.asList("ale", "apple", "monkey", "plea")));
+    }
+
+    public static void printLongestWord(String input, Set<String> dictonary){
+        Set<String> sortedBySizeDictonary = orderSetBySize(dictonary);
+
+        for (String dictonaryEntire : sortedBySizeDictonary) {
+            if (isStringContained(dictonaryEntire, input)) {
+                System.out.println(dictonaryEntire);
+                return;
+            }
+        }
+
+    }
+
+    public static boolean isStringContained(String src, String dest){
+        int i=0,j=0;
+
+        while (j<dest.length() && i<src.length()){
+            char x=src.charAt(i);
+            char y=dest.charAt(j);
+            if (x==y) {
+                i++;
+            }
+            j++;
+            if (!(j<dest.length())){
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private static Set<String> orderSetBySize(Set<String> set) {
+        TreeSet<String> treeSet= new TreeSet(new comparator());
+        for (String entire : set){
+            treeSet.add(entire);
+        }
+        return treeSet;
+    }
+
+    static class comparator implements Comparator<String>{
+        @Override
+        public int compare(String s, String t1) {
+            if (s.length()>t1.length()) return -1;
+            return 1;
+        }
+    }
